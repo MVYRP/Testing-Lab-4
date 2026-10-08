@@ -1,0 +1,35 @@
+name: Comparative Test Report
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-ai-v1-DeepSeek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ai-version-1
+      - uses: actions/setup-java@v3
+        with: { java-version: '17', distribution: 'temurin' }
+      - run: mvn test
+
+  test-ai-v2-Gemini:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ai-version-2
+      - uses: actions/setup-java@v3
+        with: { java-version: '17', distribution: 'temurin' }
+      - run: mvn test
+
+  test-ai-v3-Grok:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ai-version-3
+      - uses: actions/setup-java@v3
+        with: { java-version: '17', distribution: 'temurin' }
+      - run: mvn test
