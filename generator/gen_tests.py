@@ -45,7 +45,10 @@ TEST_METHOD_TEMPLATE = """
 
 def format_java_input(value: Any) -> str:
     if value is None: return "null"
-    if isinstance(value, str): return f'"{value}"'
+    if isinstance(value, str):
+        if value.startswith('"') and value.endswith('"'):
+            return value
+        return f'"{value}"'
     if isinstance(value, bool): return "true" if value else "false"
     return str(value)
 
