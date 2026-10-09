@@ -1,0 +1,43 @@
+# spec/compressor.yaml
+module: StringCompressor
+
+non_functional_requirements:
+  - id: NFR-1
+    desc: "Алгоритм не должен терять символы при восстановлении"
+  - id: NFR-2
+    desc: "Сжатая строка не должна содержать символов, которых не было в исходной"
+
+methods:
+  - name: InRLE
+    req_functional: ["1"]
+    req_non_functional: ["NFR-1"]
+    signature: "String InRLE(String text)"
+    pre: "text != null && !text.isEmpty() && !containsDigits(text)"
+    post: "Возвращает сжатую строку формата 'символ+число'"
+    equivalence_classes:
+      - case: "Валидная строка букв"
+        inputs: ['"aaabbc"']
+        expected: "a3b2c1"
+      - case: "Пустая строка"
+        inputs: ['""']
+        expected: "IllegalArgumentException"
+      - case: "Null значение"
+        inputs: [null]
+        expected: "IllegalArgumentException"
+      - case: "Строка с цифрами"
+        inputs: ['"abc123"']
+        expected: "IllegalArgumentException"
+
+  - name: FromRLE
+    req_functional: ["2"]
+    req_non_functional: ["NFR-2"]
+    signature: "String FromRLE(String rle)"
+    pre: "rle != null && !rle.isEmpty()"
+    post: "Возвращает распакованную исходную строку"
+    equivalence_classes:
+      - case: "Валидная RLE строка"
+        inputs: ['"a3b2c1"']
+        expected: "aaabbc"
+      - case: "Пустая строка"
+        inputs: ['""']
+        expected: "IllegalArgumentException"
