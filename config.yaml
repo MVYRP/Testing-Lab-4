@@ -1,0 +1,5 @@
+# config.yaml
+target_language: java
+test_framework: junit5
+spec_path: spec/compressor.yaml
+output_dir: src/test/java/org/example
